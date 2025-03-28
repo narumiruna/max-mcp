@@ -36,3 +36,22 @@
   }
 }
 ```
+
+## TODO
+
+- Public API
+  - [ ] index prices
+  - [ ] historical index prices
+  - [ ] available loan amount
+  - [ ] interest rates
+  - [ ] get all available markets.
+  - [ ] getApiV3Currencies
+  - [ ] getApiV3Timestamp
+  - [ ] getApiV3K
+  - [ ] getApiV3Depth
+  - [ ] getApiV3Trades
+  - [ ] getApiV3Tickers
+- Wallet
+- Order
+- Trade
+- Transaction
