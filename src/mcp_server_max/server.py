@@ -4,7 +4,7 @@ from mcp.server.fastmcp import FastMCP
 from pydantic import Field
 
 # https://github.com/jlowin/fastmcp/issues/81#issuecomment-2714245145
-mcp = FastMCP("MCP Server Template", log_level="ERROR")
+mcp = FastMCP("MCP Server MAX", log_level="ERROR")
 
 
 @mcp.tool()
@@ -13,7 +13,7 @@ def add_numbers(
     b: Annotated[float, Field(description="The second number")],
 ) -> str:
     """Add two numbers and return the result as a string."""
-    return f"{a} + {b} = {a+b} from MCP Template"
+    return f"{a} + {b} = {a+b} from MCP MAX"
 
 
 def main():

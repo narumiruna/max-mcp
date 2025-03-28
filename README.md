@@ -1,30 +1,19 @@
-# mcp-server-template
+# mcp-server-max
+
+[MaiCoin MAX API](https://max.maicoin.com/documents/api_list/v3)
 
 ### GitHub
 
 ```json
 {
   "mcpServers": {
-    "mcp-server-template": {
+    "mcp-server-max": {
       "command": "uvx",
       "args": [
         "--from",
-        "git+https://github.com/narumiruna/mcp-server-template",
-        "mcp-server-template"
+        "git+https://github.com/narumiruna/mcp-server-max",
+        "mcp-server-max"
       ]
-    }
-  }
-}
-```
-
-### PyPI
-
-```json
-{
-  "mcpServers": {
-    "mcp-server-template": {
-      "command": "uvx",
-      "args": ["mcp-server-template"]
     }
   }
 }
@@ -35,13 +24,13 @@
 ```json
 {
   "mcpServers": {
-    "mcp-server-template": {
+    "mcp-server-max": {
       "command": "uv",
       "args": [
         "run",
         "--directory",
-        "/home/<user>/workspace/mcp-server-template",
-        "mcp-server-template"
+        "/home/<user>/workspace/mcp-server-max",
+        "mcp-server-max"
       ]
     }
   }
