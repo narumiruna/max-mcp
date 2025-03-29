@@ -4,21 +4,6 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import field_validator
 
-# {
-# "market": "ethtwd",
-# "at": 1531905257,
-# "buy": "200000.0",
-# "buy_vol": "0.01",
-# "sell": "200000.0",
-# "sell_vol": "0.02",
-# "open": "200000.0",
-# "low": "200000.0",
-# "high": "200000.0",
-# "last": "200000.0",
-# "vol": "10.0",
-# "vol_in_btc": "10.0"
-# }
-
 
 class Ticker(BaseModel):
     market: str | None = Field(default=None)
