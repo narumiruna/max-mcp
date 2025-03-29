@@ -1,4 +1,6 @@
+from datetime import datetime
 from typing import Any
+from typing import Literal
 
 from .client import MAXRestClient
 from .types import Currency
@@ -66,6 +68,56 @@ class MAXExchange:
         resp = await self.client.make_request("/api/v3/ticker", params={"market": market})
         return Ticker.model_validate(resp | {"market": market})
 
+    async def get_open_orders(
+        self,
+        wallet_type: WalletType = "spot",
+        market: str | None = None,
+        dt: datetime | None = None,  # timestamp
+        order_by: Literal["asc", "desc", "asc_updated_at", "desc_updated_at"] = "desc",
+        limit: int = 50,  # 1~1000
+    ) -> list[Order]:
+        if limit < 1 or limit > 1000:
+            raise ValueError("limit must be between 1 and 1000")
+
+        params: dict[str, Any] = {}
+        if market is not None:
+            params["market"] = market
+
+        if dt is not None:
+            params["dt"] = int(dt.timestamp() * 1000)
+
+        if order_by is not None:
+            params["order_by"] = order_by
+
+        resp = await self.client.make_request(f"/api/v3/wallet/{wallet_type}/orders/open", method="GET", params=params)
+        return [Order.model_validate(d) for d in resp]
+
+    async def get_closed_orders(
+        self,
+        wallet_type: WalletType = "spot",
+        market: str | None = None,
+        dt: datetime | None = None,  # timestamp
+        order_by: Literal["asc", "desc", "asc_updated_at", "desc_updated_at"] = "desc",
+        limit: int = 50,  # 1~1000
+    ) -> list[Order]:
+        if limit < 1 or limit > 1000:
+            raise ValueError("limit must be between 1 and 1000")
+
+        params: dict[str, Any] = {}
+        if market is not None:
+            params["market"] = market
+
+        if dt is not None:
+            params["dt"] = int(dt.timestamp() * 1000)
+
+        if order_by is not None:
+            params["order_by"] = order_by
+
+        resp = await self.client.make_request(
+            f"/api/v3/wallet/{wallet_type}/orders/closed", method="GET", params=params
+        )
+        return [Order.model_validate(d) for d in resp]
+
     async def submit_order(
         self,
         market: str,
@@ -100,6 +152,5 @@ class MAXExchange:
         if group_id is not None:
             params["group_id"] = group_id
 
-        print(params)
         resp = await self.client.make_request(f"/api/v3/wallet/{wallet_type}/order", method="POST", params=params)
         return Order.model_validate(resp)
