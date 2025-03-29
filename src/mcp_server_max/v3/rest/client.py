@@ -10,6 +10,8 @@ from urllib.parse import urljoin
 import httpx
 from loguru import logger
 
+from mcp_server_max.types.market import Market
+
 
 class MAXRestClient:
     def __init__(
@@ -125,14 +127,15 @@ class MAXRestClient:
             }
         return result
 
-    async def get_markets(self) -> list[dict[str, Any]]:
+    async def get_markets(self) -> list[Market]:
         """
         Get all available markets.
 
         Returns:
-            list[dict[str, Any]]: A list of available markets.
+            list[Market]: A list of available markets.
         """
-        return await self.make_request("/api/v3/markets")
+        data = await self.make_request("/api/v3/markets")
+        return [Market.model_validate(d) for d in data]
 
     async def get_currencies(self) -> list[dict[str, Any]]:
         """
