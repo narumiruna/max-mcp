@@ -1,7 +1,11 @@
+from typing import Literal
+
 from .client import MAXRestClient
 from .types import Currency
 from .types import Market
 from .types import Ticker
+from .types.order import Order
+from .types.order import OrderType
 
 
 class MAXExchange:
@@ -59,3 +63,41 @@ class MAXExchange:
         """
         resp = await self.client.make_request("/api/v3/ticker", params={"market": market})
         return Ticker.model_validate(resp | {"market": market})
+
+    async def submit_order(
+        self,
+        market: str,
+        side: Literal["buy", "sell"],
+        volume: float,
+        wallet_type: Literal["spot", "m"] = "spot",
+        price: float | None = None,
+        client_oid: str | None = None,
+        stop_price: float | None = None,
+        order_type: OrderType = "market",
+        group_id: int | None = None,
+    ) -> Order:
+        # https://max-api.maicoin.com/api/v3/wallet/{path_wallet_type}/order
+
+        params = {
+            "market": market,
+            "side": side,
+            "volume": str(volume),
+        }
+
+        if price is not None:
+            params["price"] = str(price)
+
+        if client_oid is not None:
+            params["client_oid"] = client_oid
+        if stop_price is not None:
+            params["stop_price"] = str(stop_price)
+
+        if order_type is not None:
+            params["ord_type"] = order_type
+
+        if group_id is not None:
+            params["group_id"] = group_id
+
+        print(params)
+        resp = await self.client.make_request(f"/api/v3/wallet/{wallet_type}/order", method="POST", params=params)
+        return Order.model_validate(resp)

@@ -12,6 +12,24 @@ import httpx
 from loguru import logger
 
 
+def raise_for_status(response: httpx.Response) -> None:
+    try:
+        response.raise_for_status()
+    except httpx.HTTPStatusError as e:
+        error_details = {
+            "status_code": response.status_code,
+            "url": str(response.url),
+            "method": response.request.method,
+            "response_text": response.text,
+        }
+        logger.error(f"HTTP request failed: {error_details}")
+        raise httpx.HTTPStatusError(
+            f"HTTP request failed with status code {response.status_code}: {response.text}",
+            request=e.request,
+            response=response,
+        ) from e
+
+
 class MAXRestClient:
     def __init__(
         self,
@@ -69,10 +87,10 @@ class MAXRestClient:
         async with httpx.AsyncClient() as client:
             if method == "GET":
                 resp = await client.get(url, headers=self.headers, params=params)
-                resp.raise_for_status()
+                raise_for_status(resp)
             else:
-                resp = await client.post(url=url, headers=self.headers, data=params)
-                resp.raise_for_status()
+                resp = await client.post(url=url, headers=self.headers, json=params)
+                raise_for_status(resp)
 
         return resp.json()
 
