@@ -1,4 +1,5 @@
 from .client import MAXRestClient
+from .types import Currency
 from .types import Market
 
 
@@ -15,6 +16,10 @@ class MAXExchange:
         """
         data = await self.client.make_request("/api/v3/markets")
         return [Market.model_validate(d) for d in data]
+
+    async def get_currencies(self) -> list[Currency]:
+        data = await self.client.make_request("/api/v3/currencies")
+        return [Currency.model_validate(d) for d in data]
 
     async def get_index_price(self, symbol: str) -> float:
         data = await self.get_all_index_prices()
