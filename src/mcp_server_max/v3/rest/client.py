@@ -63,3 +63,196 @@ class MAXRestClient:
                 resp.raise_for_status()
 
         return resp.json()
+
+    async def get_index_prices(self) -> dict[str, float]:
+        """
+        Get latest index prices of m-wallet.
+
+        Returns:
+            dict[str, float]: A dictionary containing currency as key and price as value.
+        """
+        response = await self.make_request("/api/v3/wallet/m/index_prices")
+        return {k: float(v) for k, v in response.items()}
+
+    async def get_historical_index_prices(
+        self, currency: str, limit: int | None = None, timestamp: int | None = None, order: str | None = None
+    ) -> list[dict[str, Any]]:
+        """
+        Get latest historical index prices.
+
+        Args:
+            currency (str): The currency to get historical index prices for.
+            limit (int, optional): Number of data points to return.
+            timestamp (int, optional): Last timestamp to retrieve.
+            order (str, optional): Sort order, asc or desc.
+
+        Returns:
+            list[dict[str, Any]]: A list of historical index prices.
+        """
+        params = {"currency": currency}
+        if limit is not None:
+            params["limit"] = limit
+        if timestamp is not None:
+            params["timestamp"] = timestamp
+        if order is not None:
+            params["order"] = order
+
+        return await self.make_request("/api/v3/wallet/m/historical_index_prices", params=params)
+
+    async def get_limits(self) -> dict[str, float]:
+        """
+        Get total available loan amount.
+
+        Returns:
+            dict[str, float]: A dictionary containing currency as key and available loan amount as value.
+        """
+        response = await self.make_request("/api/v3/wallet/m/limits")
+        return {k: float(v) for k, v in response.items()}
+
+    async def get_interest_rates(self) -> dict[str, dict[str, float]]:
+        """
+        Get latest interest rates of m-wallet.
+
+        Returns:
+            dict[str, dict[str, float]]: A dictionary containing currency as key and interest rates as value.
+        """
+        response = await self.make_request("/api/v3/wallet/m/interest_rates")
+        result = {}
+        for currency, rates in response.items():
+            result[currency] = {
+                "hourly_interest_rate": float(rates["hourly_interest_rate"]),
+                "next_hourly_interest_rate": float(rates["next_hourly_interest_rate"]),
+            }
+        return result
+
+    async def get_markets(self) -> list[dict[str, Any]]:
+        """
+        Get all available markets.
+
+        Returns:
+            list[dict[str, Any]]: A list of available markets.
+        """
+        return await self.make_request("/api/v3/markets")
+
+    async def get_currencies(self) -> list[dict[str, Any]]:
+        """
+        Get all available currencies.
+
+        Returns:
+            list[dict[str, Any]]: A list of available currencies.
+        """
+        return await self.make_request("/api/v3/currencies")
+
+    async def get_timestamp(self) -> dict[str, int]:
+        """
+        Get server current time, in seconds since Unix epoch.
+
+        Returns:
+            dict[str, int]: A dictionary containing timestamp.
+        """
+        return await self.make_request("/api/v3/timestamp")
+
+    async def get_k_line(
+        self, market: str, period: int, limit: int | None = None, timestamp: int | None = None
+    ) -> list[list[int | float]]:
+        """
+        Get OHLC(k line) of a specific market.
+
+        Args:
+            market (str): The market to get k-line for.
+            period (int): Time period of K line in minutes. Supported values: 1, 5, 15, 30, 60, 120, 240, 360, 720, 1440, 4320, 10080.
+            limit (int, optional): Number of data points to return.
+            timestamp (int, optional): Last timestamp to retrieve.
+
+        Returns:
+            list[list[int | float]]: A list of k-line data. Each item is [timestamp, open, high, low, close, volume].
+        """  # noqa: E501
+        params = {"market": market, "period": period}
+        if limit is not None:
+            params["limit"] = limit
+        if timestamp is not None:
+            params["timestamp"] = timestamp
+
+        return await self.make_request("/api/v3/k", params=params)
+
+    async def get_depth(self, market: str, limit: int | None = None, timestamp: int | None = None) -> dict[str, Any]:
+        """
+        Get depth of a specified market.
+
+        Args:
+            market (str): The market to get depth for.
+            limit (int, optional): Number of data points to return.
+            timestamp (int, optional): Last timestamp to retrieve.
+
+        Returns:
+            dict[str, Any]: An object containing ask and bid orders, and timestamp.
+        """
+        params = {"market": market}
+        if limit is not None:
+            params["limit"] = limit
+        if timestamp is not None:
+            params["timestamp"] = timestamp
+
+        return await self.make_request("/api/v3/depth", params=params)
+
+    async def get_public_trades(
+        self,
+        market: str,
+        limit: int | None = None,
+        timestamp: int | None = None,
+        from_id: int | None = None,
+        to_id: int | None = None,
+    ) -> list[dict[str, Any]]:
+        """
+        Get recent trades on market, sorted in reverse creation order.
+
+        Args:
+            market (str): The market to get trades for.
+            limit (int, optional): Number of trades to return.
+            timestamp (int, optional): Last timestamp to retrieve.
+            from_id (int, optional): Trade id to begin from.
+            to_id (int, optional): Trade id to end at.
+
+        Returns:
+            list[dict[str, Any]]: A list of public trade data.
+        """
+        params = {"market": market}
+        if limit is not None:
+            params["limit"] = limit
+        if timestamp is not None:
+            params["timestamp"] = timestamp
+        if from_id is not None:
+            params["from"] = from_id
+        if to_id is not None:
+            params["to"] = to_id
+
+        return await self.make_request("/api/v3/trades", params=params)
+
+    async def get_tickers(self, markets: list[str] | None = None) -> list[dict[str, Any]]:
+        """
+        Get ticker of all markets.
+
+        Args:
+            markets (List[str], optional): Array of market ids to get tickers for.
+
+        Returns:
+            list[dict[str, Any]]: A list of ticker data.
+        """
+        params = {}
+        if markets:
+            params["markets[]"] = markets
+
+        return await self.make_request("/api/v3/tickers", params=params)
+
+    async def get_ticker(self, market: str) -> dict[str, Any]:
+        """
+        Get ticker of specific market.
+
+        Args:
+            market (str): The market to get ticker for.
+
+        Returns:
+            dict[str, Any]: Ticker data.
+        """
+        params = {"market": market}
+        return await self.make_request("/api/v3/ticker", params=params)
