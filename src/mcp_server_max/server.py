@@ -22,5 +22,19 @@ async def get_currencies() -> str:
     return "\n".join(str(currency) for currency in currencies)
 
 
+@mcp.tool()
+async def get_tickers() -> str:
+    """Retrieve all available tickers on the MAX exchange."""
+    tickers = await exchange.get_tickers()
+    return "\n".join(str(ticker) for ticker in tickers.values())
+
+
+@mcp.tool()
+async def get_ticker(market: str) -> str:
+    """Retrieve the ticker for a specific market symbol."""
+    ticker = await exchange.get_ticker(market)
+    return str(ticker)
+
+
 def main():
     mcp.run()
