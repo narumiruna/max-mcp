@@ -1,5 +1,5 @@
+from .client import MAXRestClient
 from .types import Market
-from .v3.rest.client import MAXRestClient
 
 
 class MAXExchange:
