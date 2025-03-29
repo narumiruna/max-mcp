@@ -1,3 +1,5 @@
+from typing import Any
+
 from .client import MAXRestClient
 from .types import Currency
 from .types import Market
@@ -78,7 +80,7 @@ class MAXExchange:
     ) -> Order:
         # https://max-api.maicoin.com/api/v3/wallet/{path_wallet_type}/order
 
-        params = {
+        params: dict[str, Any] = {
             "market": market,
             "side": side,
             "volume": str(volume),
