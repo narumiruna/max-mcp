@@ -1,35 +1,36 @@
 from pydantic import BaseModel
+from pydantic import Field
 from pydantic import field_validator
 
 
 class Network(BaseModel):
-    token_contract_address: str | None
-    precision: int
-    id: str
-    network_protocol: str
-    deposit_confirmations: int
-    withdrawal_fee: float
-    min_withdrawal_amount: float
-    withdrawal_enabled: bool
-    deposit_enabled: bool
-    need_memo: bool
+    token_contract_address: str | None = Field(default=None)
+    precision: int | None = Field(default=None)
+    id: str | None = Field(default=None)
+    network_protocol: str | None = Field(default=None)
+    deposit_confirmations: int | None = Field(default=None)
+    withdrawal_fee: float | None = Field(default=None)
+    min_withdrawal_amount: float | None = Field(default=None)
+    withdrawal_enabled: bool | None = Field(default=None)
+    deposit_enabled: bool | None = Field(default=None)
+    need_memo: bool | None = Field(default=None)
 
 
 class Staking(BaseModel):
-    stake_flag: bool
-    unstake_flag: bool
+    stake_flag: bool | None = Field(default=None)
+    unstake_flag: bool | None = Field(default=None)
 
 
 class Currency(BaseModel):
-    currency: str
-    type: str
-    precision: int
-    m_wallet_supported: bool
-    m_wallet_mortgageable: bool
-    m_wallet_borrowable: bool
-    min_borrow_amount: float | None
-    networks: list[Network]
-    staking: Staking | None
+    currency: str | None = Field(default=None)
+    type: str | None = Field(default=None)
+    precision: int | None = Field(default=None)
+    m_wallet_supported: bool | None = Field(default=None)
+    m_wallet_mortgageable: bool | None = Field(default=None)
+    m_wallet_borrowable: bool | None = Field(default=None)
+    min_borrow_amount: float | None = Field(default=None)
+    networks: list[Network] = Field(default_factory=list)
+    staking: Staking | None = Field(default=None)
 
     @field_validator("min_borrow_amount", mode="before")
     @classmethod

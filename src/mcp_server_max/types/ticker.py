@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from pydantic import BaseModel
+from pydantic import Field
 from pydantic import field_validator
 
 # {
@@ -20,18 +21,18 @@ from pydantic import field_validator
 
 
 class Ticker(BaseModel):
-    market: str
-    at: datetime
-    buy: float
-    buy_vol: float
-    sell: float
-    sell_vol: float
-    open: float
-    low: float
-    high: float
-    last: float
-    vol: float
-    vol_in_btc: float
+    market: str | None = Field(default=None)
+    at: datetime | None = Field(default=None)
+    buy: float | None = Field(default=None)
+    buy_vol: float | None = Field(default=None)
+    sell: float | None = Field(default=None)
+    sell_vol: float | None = Field(default=None)
+    open: float | None = Field(default=None)
+    low: float | None = Field(default=None)
+    high: float | None = Field(default=None)
+    last: float | None = Field(default=None)
+    vol: float | None = Field(default=None)
+    vol_in_btc: float | None = Field(default=None)
 
     @field_validator(
         "buy",
