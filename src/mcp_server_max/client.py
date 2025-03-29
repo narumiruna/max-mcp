@@ -145,15 +145,6 @@ class MAXRestClient:
             }
         return result
 
-    async def get_currencies(self) -> list[dict[str, Any]]:
-        """
-        Get all available currencies.
-
-        Returns:
-            list[dict[str, Any]]: A list of available currencies.
-        """
-        return await self.make_request("/api/v3/currencies")
-
     async def get_timestamp(self) -> dict[str, int]:
         """
         Get server current time, in seconds since Unix epoch.
