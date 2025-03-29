@@ -62,6 +62,8 @@
   - [ ] liquidation history
   - [ ] liquidation detail
   - [ ] interest history of your m-wallet
+  - [ ] withdraw_addresses
+  - [ ] deposit_address
 - Order
   - [x] open orders
   - [x] closed orders
