@@ -66,16 +66,6 @@ class MAXRestClient:
 
         return resp.json()
 
-    async def get_index_prices(self) -> dict[str, float]:
-        """
-        Get latest index prices of m-wallet.
-
-        Returns:
-            dict[str, float]: A dictionary containing currency as key and price as value.
-        """
-        response = await self.make_request("/api/v3/wallet/m/index_prices")
-        return {k: float(v) for k, v in response.items()}
-
     async def get_historical_index_prices(
         self, currency: str, limit: int | None = None, timestamp: int | None = None, order: str | None = None
     ) -> list[dict[str, Any]]:
@@ -126,16 +116,6 @@ class MAXRestClient:
                 "next_hourly_interest_rate": float(rates["next_hourly_interest_rate"]),
             }
         return result
-
-    async def get_markets(self) -> list[Market]:
-        """
-        Get all available markets.
-
-        Returns:
-            list[Market]: A list of available markets.
-        """
-        data = await self.make_request("/api/v3/markets")
-        return [Market.model_validate(d) for d in data]
 
     async def get_currencies(self) -> list[dict[str, Any]]:
         """

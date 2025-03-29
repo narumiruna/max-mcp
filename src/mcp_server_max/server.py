@@ -3,6 +3,7 @@ from typing import Annotated
 from mcp.server.fastmcp import FastMCP
 from pydantic import Field
 
+from mcp_server_max.v3.
 # https://github.com/jlowin/fastmcp/issues/81#issuecomment-2714245145
 mcp = FastMCP("MCP Server MAX", log_level="ERROR")
 
