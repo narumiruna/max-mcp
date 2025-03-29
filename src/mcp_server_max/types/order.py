@@ -44,8 +44,9 @@ class Order(BaseModel):
     def convert_float(cls, value: str | float | None) -> float | None:
         if value is None:
             return None
-
-        if isinstance(value, str):
+        elif isinstance(value, float):
+            return value
+        elif isinstance(value, str):
             return float(value)
-
-        return value
+        else:
+            raise TypeError(f"Invalid type for value: {value}")
