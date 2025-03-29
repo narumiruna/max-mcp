@@ -1,11 +1,11 @@
-from typing import Literal
-
 from .client import MAXRestClient
 from .types import Currency
 from .types import Market
 from .types import Ticker
 from .types.order import Order
 from .types.order import OrderType
+from .types.order import Side
+from .types.order import WalletType
 
 
 class MAXExchange:
@@ -67,9 +67,9 @@ class MAXExchange:
     async def submit_order(
         self,
         market: str,
-        side: Literal["buy", "sell"],
+        side: Side,
         volume: float,
-        wallet_type: Literal["spot", "m"] = "spot",
+        wallet_type: WalletType = "spot",
         price: float | None = None,
         client_oid: str | None = None,
         stop_price: float | None = None,

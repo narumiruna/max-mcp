@@ -3,5 +3,8 @@ from .currency import Network
 from .currency import Staking
 from .market import Market
 from .order import Order
+from .order import OrderStatus
 from .order import OrderType
+from .order import Side
+from .order import WalletType
 from .ticker import Ticker

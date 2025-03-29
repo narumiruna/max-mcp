@@ -1,6 +1,12 @@
+from typing import Annotated
+
 from mcp.server.fastmcp import FastMCP
+from pydantic import Field
 
 from .exchange import MAXExchange
+from .types import OrderType
+from .types import Side
+from .types import WalletType
 
 exchange = MAXExchange()
 
@@ -34,6 +40,33 @@ async def get_ticker(market: str) -> str:
     """Retrieve the ticker for a specific market symbol."""
     ticker = await exchange.get_ticker(market)
     return str(ticker)
+
+
+@mcp.tool()
+async def submit_order(
+    market: Annotated[str, Field(description="Market symbol, e.g., 'btcusdt'")],
+    side: Annotated[Side, Field(description="Order side, either 'buy' or 'sell'")],
+    volume: Annotated[float, Field(description="Total amount to sell/buy, an order could be partially executed")],
+    wallet_type: Annotated[WalletType, Field(description="Wallet type, either 'spot' or 'm'")] = "spot",
+    price: Annotated[float | None, Field(description="Price of a unit")] = None,
+    # client_oid: str | None = None,
+    stop_price: Annotated[float | None, Field(description="price to trigger a stop order")] = None,
+    order_type: OrderType = "market",
+    # group_id: int | None = None,
+) -> str:
+    """Submit an order to the MAX exchange."""
+    order = await exchange.submit_order(
+        market=market,
+        side=side,
+        volume=volume,
+        wallet_type=wallet_type,
+        price=price,
+        # client_oid=client_oid,
+        stop_price=stop_price,
+        order_type=order_type,
+        # group_id=group_id,
+    )
+    return str(order)
 
 
 def main():

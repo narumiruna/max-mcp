@@ -4,26 +4,11 @@ from typing import Literal
 from pydantic import BaseModel
 from pydantic import field_validator
 
+Side = Literal["buy", "sell"]
 OrderType = Literal["market", "limit", "stop_market", "stop_limit", "post_only", "ioc_limit"]
-# {
-# "id": 87,
-# "wallet_type": "m",
-# "market": "ethtwd",
-# "client_oid": "4511dc1f-4b28-4adb-a384-109384d3bc6e",
-# "group_id": 1,
-# "side": "buy",
-# "state": "wait",
-# "ord_type": "limit",
-# "price": "21499.0",
-# "stop_price": "21499.0",
-# "avg_price": "21499.0",
-# "volume": "0.2658",
-# "remaining_volume": "0.2658",
-# "executed_volume": "0.0",
-# "trades_count": 0,
-# "created_at": 1521726960123,
-# "updated_at": 1521726960123
-# }
+OrderStatus = Literal["wait", "done", "cancel", "convert"]
+
+WalletType = Literal["spot", "m"]
 
 
 class Order(BaseModel):
@@ -32,8 +17,8 @@ class Order(BaseModel):
     market: str
     client_oid: str | None
     group_id: int | None
-    side: str
-    state: str
+    side: Side
+    state: OrderStatus
     ord_type: OrderType
     price: float | None
     stop_price: float | None
