@@ -54,8 +54,8 @@
   - [x] v3 ticker
 - Wallet
 - Order
-  - [x] open orders
-  - [x] closed orders
+  - [-] open orders
+  - [-] closed orders
   - [ ] order history by order id
   - [x] submit order
   - [ ] cancel all orders
