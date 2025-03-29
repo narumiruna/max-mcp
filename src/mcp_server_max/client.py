@@ -220,32 +220,3 @@ class MAXRestClient:
             params["to"] = to_id
 
         return await self.make_request("/api/v3/trades", params=params)
-
-    async def get_tickers(self, markets: list[str] | None = None) -> list[dict[str, Any]]:
-        """
-        Get ticker of all markets.
-
-        Args:
-            markets (List[str], optional): Array of market ids to get tickers for.
-
-        Returns:
-            list[dict[str, Any]]: A list of ticker data.
-        """
-        params = {}
-        if markets:
-            params["markets[]"] = markets
-
-        return await self.make_request("/api/v3/tickers", params=params)
-
-    async def get_ticker(self, market: str) -> dict[str, Any]:
-        """
-        Get ticker of specific market.
-
-        Args:
-            market (str): The market to get ticker for.
-
-        Returns:
-            dict[str, Any]: Ticker data.
-        """
-        params = {"market": market}
-        return await self.make_request("/api/v3/ticker", params=params)
