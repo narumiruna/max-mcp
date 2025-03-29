@@ -5,6 +5,7 @@ import json
 import os
 import time
 from typing import Any
+from typing import Literal
 from urllib.parse import urljoin
 
 import httpx
@@ -46,7 +47,12 @@ class MAXRestClient:
             }
         )
 
-    async def make_request(self, path, method="GET", params: dict[str, Any] | None = None):
+    async def make_request(
+        self,
+        path: str,
+        method: Literal["GET", "POST"] = "GET",
+        params: dict[str, Any] | None = None,
+    ):
         params = params or {}
         params["nonce"] = int(time.time() * 1000)
 
