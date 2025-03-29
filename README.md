@@ -58,8 +58,8 @@
   - [-] closed orders
   - [ ] order history by order id
   - [x] submit order
-  - [ ] cancel all orders
+  - [-] cancel all orders
   - [ ] order detail
-  - [ ] cancel an order
+  - [-] cancel an order
 - Trade
 - Transaction
