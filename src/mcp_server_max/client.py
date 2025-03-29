@@ -19,8 +19,14 @@ class MAXRestClient:
         api_secret: str | None = None,
         base_url: str = "https://max-api.maicoin.com",
     ) -> None:
-        self.api_key = api_key or os.getenv("MAX_API_KEY", "")
-        self.api_secret = api_secret or os.getenv("MAX_API_SECRET", "")
+        if api_key is None:
+            api_key = os.getenv("MAX_API_KEY", "")
+        self.api_key = api_key
+
+        if api_secret is None:
+            api_secret = os.getenv("MAX_API_SECRET", "")
+        self.api_secret = api_secret
+
         self.base_url = base_url
         self.headers = {
             "Content-Type": "application/json",
@@ -65,7 +71,7 @@ class MAXRestClient:
                 resp = await client.get(url, headers=self.headers, params=params)
                 resp.raise_for_status()
             else:
-                resp = await client.post(url=url, headers=self.headers, data=json.dumps(params))
+                resp = await client.post(url=url, headers=self.headers, data=params)
                 resp.raise_for_status()
 
         return resp.json()
@@ -85,7 +91,7 @@ class MAXRestClient:
         Returns:
             list[dict[str, Any]]: A list of historical index prices.
         """
-        params = {"currency": currency}
+        params: dict[str, Any] = {"currency": currency}
         if limit is not None:
             params["limit"] = limit
         if timestamp is not None:
@@ -174,7 +180,7 @@ class MAXRestClient:
         Returns:
             dict[str, Any]: An object containing ask and bid orders, and timestamp.
         """
-        params = {"market": market}
+        params: dict[str, Any] = {"market": market}
         if limit is not None:
             params["limit"] = limit
         if timestamp is not None:
@@ -203,7 +209,7 @@ class MAXRestClient:
         Returns:
             list[dict[str, Any]]: A list of public trade data.
         """
-        params = {"market": market}
+        params: dict[str, Any] = {"market": market}
         if limit is not None:
             params["limit"] = limit
         if timestamp is not None:
