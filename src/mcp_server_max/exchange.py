@@ -18,6 +18,11 @@ class MAXExchange:
         return [Market.model_validate(d) for d in data]
 
     async def get_currencies(self) -> list[Currency]:
+        """Get all available currencies
+
+        Returns:
+            list[Currency]: A list of available currencies.
+        """
         data = await self.client.make_request("/api/v3/currencies")
         return [Currency.model_validate(d) for d in data]
 
