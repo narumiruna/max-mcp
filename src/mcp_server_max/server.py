@@ -1,7 +1,4 @@
-from typing import Annotated
-
 from mcp.server.fastmcp import FastMCP
-from pydantic import Field
 
 from .exchange import MAXExchange
 
