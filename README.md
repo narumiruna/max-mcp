@@ -53,6 +53,15 @@
   - [x] v2 tickers
   - [x] v3 ticker
 - Wallet
+  - [ ] accounts
+  - [ ] ad ratio
+  - [ ] submit loan
+  - [ ] loan history
+  - [ ] submit repayment
+  - [ ] repayment history
+  - [ ] liquidation history
+  - [ ] liquidation detail
+  - [ ] interest history of your m-wallet
 - Order
   - [x] open orders
   - [x] closed orders
@@ -62,4 +71,6 @@
   - [ ] order detail
   - [x] cancel an order
 - Trade
+  - [ ] trade history
+  - [ ] trade detail
 - Transaction
