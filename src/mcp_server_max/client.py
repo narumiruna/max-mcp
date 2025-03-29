@@ -74,7 +74,7 @@ class MAXRestClient:
     async def make_request(
         self,
         path: str,
-        method: Literal["GET", "POST"] = "GET",
+        method: Literal["GET", "POST", "DELETE"] = "GET",
         params: dict[str, Any] | None = None,
     ):
         params = params or {}
@@ -88,8 +88,13 @@ class MAXRestClient:
             if method == "GET":
                 resp = await client.get(url, headers=self.headers, params=params)
                 raise_for_status(resp)
-            else:
+            elif method == "POST":
                 resp = await client.post(url=url, headers=self.headers, json=params)
                 raise_for_status(resp)
+            elif method == "DELETE":
+                resp = await client.delete(url=url, headers=self.headers, params=params)
+                raise_for_status(resp)
 
+            else:
+                raise ValueError(f"Unsupported HTTP method: {method}")
         return resp.json()

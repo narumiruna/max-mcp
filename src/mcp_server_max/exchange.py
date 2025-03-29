@@ -154,3 +154,27 @@ class MAXExchange:
 
         resp = await self.client.make_request(f"/api/v3/wallet/{wallet_type}/order", method="POST", params=params)
         return Order.model_validate(resp)
+
+    async def cancel_all_orders(
+        self,
+        wallet_type: WalletType = "spot",
+        market: str | None = None,
+        side: Side | None = None,
+        group_id: int | None = None,
+    ) -> list[dict[str, str | Order]]:
+        pass
+        # https://max-api.maicoin.com/api/v3/wallet/{path_wallet_type}/orders
+
+        params: dict[str, Any] = {}
+        if market is not None:
+            params["market"] = market
+
+        if side is not None:
+            params["side"] = side
+
+        if group_id is not None:
+            params["group_id"] = group_id
+
+        resp = await self.client.make_request(f"/api/v3/wallet/{wallet_type}/orders", method="DELETE", params=params)
+
+        return [{"error": d["error"], "order": Order.model_validate(d["order"])} for d in resp]
