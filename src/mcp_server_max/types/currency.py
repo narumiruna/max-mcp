@@ -1,34 +1,5 @@
-from loguru import logger
 from pydantic import BaseModel
 from pydantic import field_validator
-
-# {
-# "currency": "usdt",
-# "type": "crypto",
-# "precision": 8,
-# "m_wallet_supported": true,
-# "m_wallet_mortgageable": true,
-# "m_wallet_borrowable": true,
-# "min_borrow_amount": "0.001",
-# "networks": [
-# {
-# "token_contract_address": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
-# "precision": 8,
-# "id": "trc20usdt",
-# "network_protocol": "tron-trc20",
-# "deposit_confirmations": 3,
-# "withdrawal_fee": 0.0005,
-# "min_withdrawal_amount": 0.001,
-# "withdrawal_enabled": true,
-# "deposit_enabled": true,
-# "need_memo": false
-# }
-# ],
-# "staking": {
-# "stake_flag": true,
-# "unstake_flag": false
-# }
-# }
 
 
 class Network(BaseModel):
