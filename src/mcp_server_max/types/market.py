@@ -3,7 +3,7 @@ from pydantic import Field
 
 
 class Market(BaseModel):
-    id: str = Field(..., alias="symbol", description="unique market id")
+    id: str = Field(..., description="unique market id")
     status: str = Field(..., description="market status")
     base_unit: str = Field(..., description="base unit")
     base_unit_precision: int = Field(..., description="fixed precision of base unit")
