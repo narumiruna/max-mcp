@@ -44,13 +44,14 @@
   - [ ] historical index prices
   - [ ] available loan amount
   - [ ] interest rates
-  - [ ] get all available markets.
-  - [ ] getApiV3Currencies
+  - [x] get all available markets.
+  - [x] getApiV3Currencies
   - [ ] getApiV3Timestamp
   - [ ] getApiV3K
   - [ ] getApiV3Depth
   - [ ] getApiV3Trades
-  - [ ] getApiV3Tickers
+  - [x] v2 tickers
+  - [x] v3 ticker
 - Wallet
 - Order
 - Trade
