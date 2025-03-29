@@ -10,8 +10,6 @@ from urllib.parse import urljoin
 import httpx
 from loguru import logger
 
-from mcp_server_max.types.market import Market
-
 
 class MAXRestClient:
     def __init__(
