@@ -6,7 +6,7 @@ from pydantic import field_validator
 
 
 class Ticker(BaseModel):
-    market: str | None = Field(default=None)
+    market: str = Field(..., description="Market ID, e.g., 'btcusdt'")
     at: datetime | None = Field(default=None)
     buy: float | None = Field(default=None)
     buy_vol: float | None = Field(default=None)
