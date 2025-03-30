@@ -18,7 +18,8 @@ GENERAL WORKFLOW:
 2. Check account balances with `get_accounts()` before trading
 3. For market information, use `get_tickers(markets=['symbol1', 'symbol2'])` with specific market symbols
 4. When ready to trade, use `submit_order()` with proper parameters (always review confirmation before executing)
-5. To cancel all pending orders, use `cancel_orders()`
+5. To monitor your open orders, use `get_open_orders()` to view pending trades
+6. To cancel pending orders, use `cancel_orders()` with appropriate filters
 
 IMPORTANT TRADING GUIDELINES:
 - Always check account balances before placing orders
@@ -28,6 +29,12 @@ IMPORTANT TRADING GUIDELINES:
 - The side parameter must be either 'buy' or 'sell'
 - Double-check all parameters before confirming any order submission
 - Consider starting with small test orders if uncertain
+
+ORDER MANAGEMENT:
+- Use `get_open_orders(wallet_type='spot', market='symbol')` to check your pending orders for a specific market
+- Use `get_open_orders(wallet_type='spot')` to see all pending orders across markets
+- Use `cancel_orders(wallet_type='spot', market='symbol', side='buy')` to cancel all buy orders for a specific market
+- Use `cancel_orders(wallet_type='spot')` to cancel all pending orders across all markets (use with caution)
 
 RISK WARNINGS:
 - Cryptocurrency trading involves high risk
