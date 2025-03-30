@@ -22,7 +22,7 @@ class Staking(BaseModel):
 
 
 class Currency(BaseModel):
-    currency: str | None = Field(default=None)
+    currency: str = Field(..., description="Currency code, e.g., 'btc', 'eth'")
     type: str | None = Field(default=None)
     precision: int | None = Field(default=None)
     m_wallet_supported: bool | None = Field(default=None)

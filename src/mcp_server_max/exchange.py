@@ -19,15 +19,15 @@ class MAXExchange:
     def __init__(self) -> None:
         self.client = MAXRestClient()
 
-        self._markets: dict[str, Market] | None = None
-        self._currencies: dict[str, Currency] | None = None
+        self._markets: dict[str, Market] = {}
+        self._currencies: dict[str, Currency] = {}
 
     async def initialize(self) -> MAXExchange:
-        if self._markets is None:
+        if not self._markets:
             markets = await self.get_markets()
             self._markets = {m.id: m for m in markets}
 
-        if self._currencies is None:
+        if not self._currencies:
             currencies = await self.get_currencies()
             self._currencies = {c.currency: c for c in currencies}
 

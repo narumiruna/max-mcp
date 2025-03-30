@@ -69,5 +69,12 @@ async def submit_order(
     return str(order)
 
 
+@mcp.tool()
+async def get_accounts() -> str:
+    """Retrieve all available accounts on the MAX exchange."""
+    accounts = await exchange.get_accounts()
+    return "\n".join(str(account) for account in accounts)
+
+
 def main():
     mcp.run()
