@@ -2,6 +2,15 @@
 
 [MaiCoin MAX API](https://max.maicoin.com/documents/api_list/v3)
 
+## Tools
+
+- get_markets
+- get_currencies
+- get_accounts
+- get_tickers
+- submit_order
+- cancel_orders
+
 ### GitHub
 
 ```json

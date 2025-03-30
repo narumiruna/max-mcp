@@ -74,5 +74,12 @@ async def get_accounts() -> str:
     return "\n".join(str(account) for account in accounts)
 
 
+@mcp.tool()
+async def cancel_orders() -> str:
+    """Cancel all orders on the MAX exchange."""
+    orders = await exchange.cancel_orders()
+    return "\n".join(str(order) for order in orders)
+
+
 def main():
     mcp.run()
