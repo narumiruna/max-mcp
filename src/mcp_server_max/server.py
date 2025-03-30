@@ -103,9 +103,27 @@ async def get_accounts() -> str:
 
 
 @mcp.tool()
-async def cancel_orders() -> str:
-    """Cancel all orders on the MAX exchange."""
-    orders = await exchange.cancel_orders()
+async def cancel_orders(
+    wallet_type: Annotated[WalletType, Field(description="Wallet type, either 'spot' or 'm'")] = "spot",
+    market: Annotated[str | None, Field(description="Market symbol, e.g., 'btcusdt'") | None] = None,
+    side: Annotated[Side | None, Field(description="Order side, either 'buy' or 'sell'") | None] = None,
+) -> str:
+    """Cancel orders on the MAX exchange."""
+    orders = await exchange.cancel_orders(
+        wallet_type=wallet_type,
+        market=market,
+        side=side,
+    )
+    return "\n".join(str(order) for order in orders)
+
+
+@mcp.tool()
+async def get_open_orders(
+    wallet_type: Annotated[WalletType, Field(description="Wallet type, either 'spot' or 'm'")] = "spot",
+    market: Annotated[str | None, Field(description="Market symbol, e.g., 'btcusdt'") | None] = None,
+) -> str:
+    """Retrieve all open orders on the MAX exchange."""
+    orders = await exchange.get_open_orders(wallet_type=wallet_type, market=market)
     return "\n".join(str(order) for order in orders)
 
 
