@@ -49,7 +49,10 @@ async def submit_order(
     order_type: OrderType = "market",
     # group_id: int | None = None,
 ) -> str:
-    """Submit an order to the MAX exchange."""
+    """Submit an order to the MAX exchange.
+
+    A confirmation prompt will display all order details for user review and require explicit approval before execution.
+    """
     order = await exchange.submit_order(
         market=market,
         side=side,
