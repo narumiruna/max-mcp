@@ -3,10 +3,10 @@ from typing import Annotated
 from mcp.server.fastmcp import FastMCP
 from pydantic import Field
 
-from .exchange import MAXExchange
-from .types import OrderType
-from .types import Side
-from .types import WalletType
+from mcp_server_max.exchange import MAXExchange
+from mcp_server_max.types import OrderType
+from mcp_server_max.types import Side
+from mcp_server_max.types import WalletType
 
 exchange = MAXExchange()
 
