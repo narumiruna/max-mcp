@@ -11,18 +11,15 @@
 - submit_order
 - cancel_orders
 
-### GitHub
+## Usage
 
+From PyPI:
 ```json
 {
   "mcpServers": {
-    "mcp-server-max": {
+    "yfmcp": {
       "command": "uvx",
-      "args": [
-        "--from",
-        "git+https://github.com/narumiruna/mcp-server-max",
-        "mcp-server-max"
-      ],
+      "args": ["maxmcp"],
       "env": {
         "MAX_API_KEY": "",
         "MAX_API_SECRET": ""
@@ -32,18 +29,16 @@
 }
 ```
 
-### Local
-
+From GitHub repository:
 ```json
 {
   "mcpServers": {
-    "mcp-server-max": {
-      "command": "uv",
+    "maxmcp": {
+      "command": "uvx",
       "args": [
-        "run",
-        "--directory",
-        "/home/<user>/workspace/mcp-server-max",
-        "mcp-server-max"
+        "--from",
+        "git+https://github.com/narumiruna/maxmcp",
+        "maxmcp"
       ],
       "env": {
         "MAX_API_KEY": "",
