@@ -4,10 +4,10 @@ from typing import Final
 from mcp.server.fastmcp import FastMCP
 from pydantic import Field
 
-from mcp_server_max.exchange import MAXExchange
-from mcp_server_max.types import OrderType
-from mcp_server_max.types import Side
-from mcp_server_max.types import WalletType
+from maxmcp.exchange import MAXExchange
+from maxmcp.types import OrderType
+from maxmcp.types import Side
+from maxmcp.types import WalletType
 
 INSTRUCTIONS: Final[
     str
