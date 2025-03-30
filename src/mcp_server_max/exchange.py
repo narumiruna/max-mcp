@@ -69,7 +69,7 @@ class MAXExchange:
         """Get latest tickers of all markets
 
         Returns:
-            list[Ticker]: A list of latest tickers.
+            dict[str, Ticker]: A dictionary containing market id(symbol) as key and Ticker object as value.
         """
         resp = await self.client.make_request("/api/v2/tickers")
         return {k: Ticker.model_validate(v | {"market": k}) for k, v in resp.items()}
