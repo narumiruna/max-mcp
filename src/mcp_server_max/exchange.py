@@ -1,20 +1,37 @@
+from __future__ import annotations
+
 from datetime import datetime
 from typing import Any
 from typing import Literal
 
 from .client import MAXRestClient
+from .types import Account
 from .types import Currency
 from .types import Market
+from .types import Order
+from .types import OrderType
+from .types import Side
 from .types import Ticker
-from .types.order import Order
-from .types.order import OrderType
-from .types.order import Side
-from .types.order import WalletType
+from .types import WalletType
 
 
 class MAXExchange:
     def __init__(self) -> None:
         self.client = MAXRestClient()
+
+        self._markets: dict[str, Market] | None = None
+        self._currencies: dict[str, Currency] | None = None
+
+    async def initialize(self) -> MAXExchange:
+        if self._markets is None:
+            markets = await self.get_markets()
+            self._markets = {m.id: m for m in markets}
+
+        if self._currencies is None:
+            currencies = await self.get_currencies()
+            self._currencies = {c.currency: c for c in currencies}
+
+        return self
 
     async def get_markets(self) -> list[Market]:
         """
@@ -184,3 +201,13 @@ class MAXExchange:
 
         resp = await self.client.make_request("/api/v3/order", method="DELETE", params=params)
         return resp
+
+    async def get_accounts(self, wallet_type: WalletType = "spot", currency: str | None = None) -> list[Account]:
+        params = {}
+        if currency is not None:
+            if currency not in self._currencies:
+                raise ValueError(f"Invalid currency: {currency}")
+            params["currency"] = currency
+
+        resp = await self.client.make_request(f"/api/v3/wallet/{wallet_type}/accounts", method="GET", params=params)
+        return [Account.model_validate(d) for d in resp]

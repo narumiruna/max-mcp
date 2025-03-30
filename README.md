@@ -53,7 +53,7 @@
   - [x] v2 tickers
   - [x] v3 ticker
 - Wallet
-  - [ ] accounts
+  - [x] accounts
   - [ ] ad ratio
   - [ ] submit loan
   - [ ] loan history

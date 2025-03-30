@@ -1,3 +1,4 @@
+from .account import Account
 from .currency import Currency
 from .currency import Network
 from .currency import Staking
