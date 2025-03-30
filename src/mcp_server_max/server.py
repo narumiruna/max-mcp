@@ -29,17 +29,12 @@ async def get_currencies() -> str:
 
 
 @mcp.tool()
-async def get_tickers() -> str:
-    """Retrieve all available tickers on the MAX exchange."""
+async def get_tickers(
+    markets: Annotated[list[str], Field(description="List of market symbols, e.g., ['btcusdt', 'ethusdt']")],
+) -> str:
+    """Retrieve tickers for specified markets on the MAX exchange."""
     tickers = await exchange.get_tickers()
-    return "\n".join(str(ticker) for ticker in tickers.values())
-
-
-@mcp.tool()
-async def get_ticker(market: str) -> str:
-    """Retrieve the ticker for a specific market symbol."""
-    ticker = await exchange.get_ticker(market)
-    return str(ticker)
+    return "\n".join(str(tickers[market]) for market in markets if market in tickers)
 
 
 @mcp.tool()
