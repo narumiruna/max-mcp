@@ -1,4 +1,5 @@
 from typing import Annotated
+from typing import Final
 
 from mcp.server.fastmcp import FastMCP
 from pydantic import Field
@@ -8,10 +9,37 @@ from mcp_server_max.types import OrderType
 from mcp_server_max.types import Side
 from mcp_server_max.types import WalletType
 
-exchange = MAXExchange()
+INSTRUCTIONS: Final[
+    str
+] = """This is the MAX Exchange trading interface. Use these tools to interact with cryptocurrency markets on the MAX exchange.
+
+GENERAL WORKFLOW:
+1. First, explore available markets with `get_markets()` and currencies with `get_currencies()`
+2. Check account balances with `get_accounts()` before trading
+3. For market information, use `get_tickers(markets=['symbol1', 'symbol2'])` with specific market symbols
+4. When ready to trade, use `submit_order()` with proper parameters (always review confirmation before executing)
+5. To cancel all pending orders, use `cancel_orders()`
+
+IMPORTANT TRADING GUIDELINES:
+- Always check account balances before placing orders
+- Market symbols are typically in lowercase (e.g., 'btcusdt', 'ethusdt')
+- For market orders, only specify volume (quantity) as price is determined by the market
+- For limit orders, specify both price and volume
+- The side parameter must be either 'buy' or 'sell'
+- Double-check all parameters before confirming any order submission
+- Consider starting with small test orders if uncertain
+
+RISK WARNINGS:
+- Cryptocurrency trading involves high risk
+- Market orders execute immediately at current market prices
+- The MAX exchange may have specific trading fees and rules
+- Always verify order details carefully before confirmation
+"""  # noqa: E501
 
 # https://github.com/jlowin/fastmcp/issues/81#issuecomment-2714245145
-mcp = FastMCP("MCP Server MAX", log_level="ERROR")
+mcp = FastMCP("MCP Server MAX", instructions=INSTRUCTIONS, log_level="ERROR")
+
+exchange = MAXExchange()
 
 
 @mcp.tool()
