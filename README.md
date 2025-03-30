@@ -13,7 +13,11 @@
         "--from",
         "git+https://github.com/narumiruna/mcp-server-max",
         "mcp-server-max"
-      ]
+      ],
+      "env": {
+        "MAX_API_KEY": "",
+        "MAX_API_SECRET": ""
+      }
     }
   }
 }
@@ -31,7 +35,11 @@
         "--directory",
         "/home/<user>/workspace/mcp-server-max",
         "mcp-server-max"
-      ]
+      ],
+      "env": {
+        "MAX_API_KEY": "",
+        "MAX_API_SECRET": ""
+      }
     }
   }
 }
