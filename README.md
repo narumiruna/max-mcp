@@ -37,7 +37,7 @@ From GitHub repository:
       "command": "uvx",
       "args": [
         "--from",
-        "git+https://github.com/narumiruna/maxmcp",
+        "git+https://github.com/narumiruna/max-mcp",
         "maxmcp"
       ],
       "env": {
