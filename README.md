@@ -17,7 +17,7 @@ From PyPI:
 ```json
 {
   "mcpServers": {
-    "yfmcp": {
+    "maxmcp": {
       "command": "uvx",
       "args": ["maxmcp"],
       "env": {
