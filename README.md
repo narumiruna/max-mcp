@@ -1,4 +1,4 @@
-# MaiCoin MAX Exchange MCP Server
+# WIP: MaiCoin MAX Exchange MCP Server
 
 [MaiCoin MAX API](https://max.maicoin.com/documents/api_list/v3)
 
